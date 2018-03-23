@@ -33,10 +33,10 @@ module.exports = class extends Generator {
 
     writing () {
         // copy configuration files
-        this.fs.copy(
-            this.templatePath('.gitignore'),
-            this.destinationPath('.gitignore')
-        )
+        // this.fs.copy(
+        //     this.templatePath('.gitignore'),
+        //     this.destinationPath('.gitignore')
+        // )
 
         this.fs.copyTpl(
             this.templatePath('.node-version'),
