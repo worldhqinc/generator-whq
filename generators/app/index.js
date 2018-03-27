@@ -121,11 +121,7 @@ module.exports = class extends Generator {
         }
 
         // install dependencies
-        this.installDependencies({
-            bower: false,
-            callback: function () {
-                this.spawnCommand('npm', ['run', 'watch'])
-            }.bind(this)
-        })
+        this.installDependencies({ bower: false })
+            .then(() => this.spawnCommand('npm', ['run', 'watch']))
     }
 }
