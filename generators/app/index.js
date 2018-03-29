@@ -118,6 +118,11 @@ module.exports = class extends Generator {
                 this.templatePath('footer.php'),
                 this.destinationPath('footer.php')
             )
+
+            this.fs.copy(
+                this.templatePath('partials/service-worker.php'),
+                this.destinationPath('partials/service-worker.php')
+            )
         }
 
         // install dependencies

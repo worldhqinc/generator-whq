@@ -18,6 +18,18 @@ get_header();
     $assets = json_decode($manifest, true);
     ?>
     <link rel="stylesheet" href="build/<?php echo $assets['main.css']; ?>">
+    <!--<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/build/service-worker.js', {scope: '/'})
+                    .then(registration => {
+                        console.log('SW registered: ', registration)
+                    }).catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError)
+                    })
+            })
+        }
+    </script>-->
 </head>
 <body>
     <p>This is a WHQ project.</p>

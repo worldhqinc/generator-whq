@@ -6,6 +6,7 @@ const PurifyCSSPlugin = require('purifycss-webpack')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const inProduction = (process.env.NODE_ENV === 'production')
 
@@ -122,6 +123,9 @@ module.exports = {
         }),
 
         new ManifestPlugin(),
+
+        // uncomment to generate service worker
+        // new WorkboxPlugin.GenerateSW(),
 
         new BrowserSyncPlugin({
             host: 'localhost',
