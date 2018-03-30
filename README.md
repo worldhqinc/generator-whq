@@ -25,6 +25,8 @@ yo whq
 
 Follow the command prompts to customize your project.
 
+!(https://raw.githubusercontent.com/worldhqinc/generator-whq/master/images/generator-options.png)
+
 ### Local Proxy
 Local proxy is the local host name at which you plan to run your project. The generated project will run on `localhost` with a proxy to whichever hostname you define.
 
