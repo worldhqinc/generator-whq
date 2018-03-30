@@ -29,12 +29,12 @@ Follow the command prompts to customize your project.
 Local proxy is the local host name at which you plan to run your project. The generated project will run on `localhost` with a proxy to whichever hostname you define.
 
 ### What type of project do you want to generate?
-You can choose from two project types. A Basic PHP project will generate an index.php file, as well as header.php and footer.php partials. A Wordpress Theme will include a `style.css` file with the theme name and necessary Wordpress tags to make your project a valid theme.
+You can choose from two project types. A Basic PHP project will generate an `index.php` file, as well as `header.php` and `footer.php` partials. A Wordpress Theme will include a `style.css` file with the theme name and necessary Wordpress tags to make your project a valid theme.
 
 ### What style processor do you want to use?
-You can choose Sass or PostCSS as your CSS processor, which will add the appropriate loaders to generated webpack file.
+You can choose Sass or PostCSS as your CSS processor, which will add the appropriate loaders to the generated webpack file.
 
-After you have chosen your options, all the generator will run npm install to get all dependencies and will then run webpack in watch mode. You can immediately start writing HTML, CSS or JavaScript and see your project live reload when viewing at localhost in the browser.
+After you have chosen your options, the generator will run `npm install` to get all dependencies and will then run `webpack` in watch mode. You can immediately start writing HTML, CSS or JavaScript and see your project live reload when viewing at `localhost` in the browser.
 
 ## Scripts
 
@@ -42,7 +42,7 @@ After you have chosen your options, all the generator will run npm install to ge
 |-------------|------------------------------------------------------------|
 | dev         | Run dev build                                              |
 | watch       | Run dev and put project into watch mode with hot reloading |
-|             | Run production build (includes minification)               |
+| production  | Run production build (includes minification)               |
 
 ## Tools & Configuration
 
@@ -50,23 +50,37 @@ The generated project uses several packages and plugins to make development easi
 
 ### BrowserSync
 
-The WHQ generator will use [BrowerSync](https://www.browsersync.io) to serve a hot reloading version of the project. You may need to add or change the proxy defined in the BrowserSync options (in webpack config file if using webpack). The proxy will be used if you are running your project on MAMP or a virtual machine. The proxy should match the host name. If you are not using a virtual machine, you will not need the proxy.
+The WHQ generator will use [BrowerSync](https://www.browsersync.io) to serve a hot reloading version of the project. You may need to add or change the proxy defined in the BrowserSync options (in the webpack config file if using webpack). The proxy will be used if you are running your project on MAMP or a virtual machine. The proxy should match the host name. If you are not using a virtual machine, you will not need the proxy.
+
+```js
+new BrowserSyncPlugin({
+    host: 'localhost',
+    port: 3000,
+    proxy: 'my-project.test',
+    files: [
+        path.join(__dirname, '**/*.php'),
+        path.join(__dirname, 'build/*')
+    ],
+    open: false,
+    notify: false
+})
+```
 
 ### Node Version
 
-Different projects will have different node version dependencies and it can get difficult to manage these. We use avn to manage node versions. This allows us to switch node versions via the command line.
+Different projects will have different node version dependencies and it can get difficult to manage these. We use `avn` to automatically switch node versions.
 
-We place a ``.node-version` file at the root of every project. This simply contains the version number of node the project should use.
+We place a `.node-version` file at the root of every project. This simply contains the version number of node the project should use.
 
 ```
 6.7.0
 ```
 
-Then, whenever you change into the project directory, avn will automatically change to the version of node defined in the ``.node-version` file.
+Then, whenever you change into the project directory, avn will automatically change to the version of node defined in the `.node-version` file.
 
 ### Webpack
 
-[Webpack](https://webpack.github.io) is a module bundler. It takes modules and builds out static assets. The configuration for Webpack is defined in webpack.config.js. It is responsible for:
+[Webpack](https://webpack.github.io) is a module bundler. It takes modules and builds out static assets. The configuration for Webpack is defined in `webpack.config.js`. It is responsible for:
 
 * Bundling scripts together and minifying them in production mode
 * Converting Sass, Less or PostCSS to CSS
@@ -83,7 +97,7 @@ There a few special plugins that are part of our webpack setup:
 
 [Modernizr](https://modernizr.com) provides powerful browser feature detection that can be tremendously useful when developing more complex interactions.
 
-This loader allows you to configure modernizr directly in the webpack config file. The modernizr package is included in the generated dependencies list, so all you need to do is add your configuration to the options object in the loader configuration:
+This loader allows you to configure modernizr directly in the webpack config file. The modernizr package is included in the generated dependencies list, so all you need to do is add your configuration to the `options` object in the loader configuration:
 
 ```js
 {
@@ -111,7 +125,7 @@ The modernizr plugin uses a blank `modernizr.js` file at the root of the project
 
 #### ExtractTextPlugin
 
-This plugin extracts any styles from JavaScript files and puts them in a separate CSS file.
+This plugin extracts any styles from JavaScript files and puts them into a separate CSS file.
 
 #### PurifyCSSPlugin
 
@@ -130,7 +144,7 @@ new PurifyCSSPlugin({
 
 Here, we are looking in all PHP and JavaScript files. You may need to look elsewhere. You may also want to add a `node_module` to this list.
 
-It is important to note that the plugin will not remove any classes that don't exist in your markup. So any classes added through JavaScript (including classes coming from external libraries or other sources), will be removed. In order to prevent this, you can whitelist certain patterns:
+It is important to note that the plugin will remove any classes that don't exist in your markup. So any classes added through JavaScript (including classes coming from external libraries or other sources), will be removed. In order to prevent this, you can whitelist certain patterns:
 
 ```
 new PurifyCSSPlugin({
@@ -186,7 +200,7 @@ When using a basic PHP project, you can use these assets by accessing the manife
 <link rel="stylesheet" href="build/<?php echo $assets['main.css']; ?>">
 ```
 
-When using the Wordpress theme setup, `WHQAssets` PHP class reads this file and makes these assets globally available to you inside the `$GLOBALS` variable:
+When using the Wordpress theme setup, the `WHQAssets` PHP class reads this file and makes these assets globally available to you inside the `$GLOBALS` variable:
 
 ```php
 <link rel="stylesheet" href="<?php echo $GLOBALS['assets']->get(get_template_directory_uri() . '/build', 'main.css'); ?>">
@@ -200,7 +214,7 @@ When using the Wordpress theme setup, `WHQAssets` PHP class reads this file and 
 new WorkboxPlugin.GenerateSW(),
 ```
 
-Then, comment in the code that will register the service worker. In a basic PHP project this will be an line script tag in your `head`:
+Then, comment in the code that will register the service worker. In a basic PHP project this will be an inline script tag in your `head`:
 
 ```php
 if ('serviceWorker' in navigator) {
@@ -219,6 +233,35 @@ In the Wordpress setup, this has been extracted to a partial:
 
 ```php
 <?php get_template_part('partials/service-worker', 'index'); ?>
+```
+
+By default, the workbox plugin with precache any assets built through Webpack. You can add configuration options to perform additional runtime caching. For example, here we are caching every request at our current service worker scope, as well as any request to the google fonts api.
+
+```js
+new WorkboxPlugin.GenerateSW({
+    clientsClaim: true,
+    skipWaiting: true,
+    runtimeCaching: [
+        {
+            urlPattern: new RegExp('/*'),
+            handler: 'staleWhileRevalidate'
+        }, {
+            urlPattern: new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'),
+            handler: 'staleWhileRevalidate'
+        }
+    ]
+}),
+```
+
+Note that you may want to alter the scope of the service worker to look outside of the wepback `build` directory. The generator automatically changes the scope when register the worker. For all this to work, you will need to make sure your server configuration is set up to remove caching from the service worker file, and allow root scope. Here is the configuration needed for nginx:
+
+```
+location ~* (service-worker\.js)$ {
+    add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    expires off;
+    proxy_no_cache 1;
+    add_header Service-Worker-Allowed '/';
+}
 ```
 
 ### Babel
