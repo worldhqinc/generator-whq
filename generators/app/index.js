@@ -120,8 +120,18 @@ module.exports = class extends Generator {
             )
 
             this.fs.copy(
+                this.templatePath('functions.php'),
+                this.destinationPath('functions.php')
+            )
+
+            this.fs.copy(
                 this.templatePath('partials/service-worker.php'),
                 this.destinationPath('partials/service-worker.php')
+            )
+
+            this.fs.copy(
+                this.templatePath('classes/WHQAssets.php'),
+                this.destinationPath('classes/WHQAssets.php')
             )
         }
 
