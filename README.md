@@ -1,14 +1,5 @@
 # WHQ Generator
-A yeoman generator for simple PHP projects and Wordpress themes, including:
-
-* Complete webpack setup
-* Options for Sass or PostCSS
-* Hashing of stylesheets, scripts and images for caching purposes
-* Babel setup so you can use ES6 syntax
-* CSS purification so unused styles are removed
-* CSS and JS minification in production
-* Linting with ESLint and Stylelint
-* BrowserSync for hot reloading
+A yeoman generator for simple PHP projects and Wordpress themes, to be used as a starter kit for WHQ projects.
 
 ## Installation
 
