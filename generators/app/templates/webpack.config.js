@@ -72,7 +72,10 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: true
+                }
             },
 
             // uncomment and add options to use modernizr
