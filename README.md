@@ -93,7 +93,21 @@ Then, whenever you change into the project directory, avn will automatically cha
 * Hashing assets and generating a manifest
 * Starting up a live reloading a dev server in development mode
 
-There a few special plugins that are part of our webpack setup:
+There a few special tools and plugins that are part of our webpack setup:
+
+#### Vendor Bundling
+
+Extracting common packages into bundles is a feature that is now built into webpack. This is useful for bundling together vendor assets.
+
+```js
+entry: {
+    'vendor': [
+        'vue',
+        'vue-resource',
+        'vue-router'
+    ]
+}
+```
 
 #### Modernizr
 
@@ -125,7 +139,7 @@ resolve: {
 
 The modernizr plugin uses a blank `modernizr.js` file at the root of the project and writes the modernizr build to this file. If you plan on using modernizr, make sure you don't delete this file.
 
-#### ExtractTextPlugin
+#### MiniCSSExtractPlugin
 
 This plugin extracts any styles from JavaScript files and puts them into a separate CSS file.
 
@@ -154,27 +168,6 @@ new PurifyCSSPlugin({
         whitelist: ['*gform*', '*gfield*']
     }
 })
-```
-
-#### CommonsChunkPlugin
-
-This plugin can extract commonly used packages into their own separate bundle. This is useful for bundling together vendor assets.
-
-```js
-entry: {
-    'vendor': [
-        'vue',
-        'vue-resource',
-        'vue-router'
-    ]
-},
-
-plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        filename: 'vendor/vendor.js'
-    })
-]
 ```
 
 #### ManifestPlugin

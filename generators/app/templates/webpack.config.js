@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const glob = require('glob-all')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurifyCSSPlugin = require('purifycss-webpack')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -11,6 +11,8 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const inProduction = (process.env.NODE_ENV === 'production')
 
 module.exports = {
+    mode: process.env.NODE_ENV || 'development',
+
     entry: {
         main: [
             './js/main.js',
@@ -30,10 +32,11 @@ module.exports = {
         rules: [
             {
                 test: <% if (processor === 'Sass') { %>/\.s[ac]ss$/<% } %><% if (processor === 'PostCSS') { %>/\.css$/<% } %>,
-                use: ExtractTextPlugin.extract({
-                    use: <% if (processor === 'Sass') { %>['css-loader', 'postcss-loader', 'sass-loader']<% } %><% if (processor === 'PostCSS') { %>'css-loader?importLoaders=1,url=false!postcss-loader'<% } %>,
-                    fallback: 'style-loader'
-                })
+                use: [
+                    'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    <% if (processor === 'Sass') { %>'css-loader','postcss-loader','sass-loader'<% } %><% if (processor === 'PostCSS') { %>'css-loader?importLoaders=1,url=false!postcss-loader'<% } %>
+                ]
             },
 
             {
@@ -101,7 +104,9 @@ module.exports = {
             dry: false
         }),
 
-        new ExtractTextPlugin(inProduction ? '[name].[chunkhash].css' : '[name].css'),
+        new MiniCssExtractPlugin({
+            filename: inProduction ? '[name].[hash].css' : '[name].css'
+        }),
 
         new PurifyCSSPlugin({
             paths: glob.sync([
@@ -113,16 +118,6 @@ module.exports = {
 
         new StyleLintPlugin({
             <% if (processor === 'Sass') { %>files: ['scss/*.scss']<% } else { %>files: ['css/*.css']<% } %>
-        }),
-
-        // uncomment this plugin if using vendor chunk
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        //     filename: 'vendor.js'
-        // }),
-
-        new webpack.LoaderOptionsPlugin({
-            minimize: inProduction
         }),
 
         new ManifestPlugin(),
@@ -142,10 +137,4 @@ module.exports = {
             notify: false
         })
     ]
-}
-
-if (inProduction) {
-    module.exports.plugins.push(
-        new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
-    )
 }
