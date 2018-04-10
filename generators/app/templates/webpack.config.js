@@ -35,7 +35,7 @@ module.exports = {
                 use: [
                     'style-loader',
                     MiniCssExtractPlugin.loader,
-                    <% if (processor === 'Sass') { %>'css-loader','postcss-loader','sass-loader'<% } %><% if (processor === 'PostCSS') { %>'css-loader?importLoaders=1,url=false!postcss-loader'<% } %>
+                    <% if (processor === 'Sass') { %>{ loader: 'css-loader', options: { minimize: process.env.NODE_ENV === 'production' } },'postcss-loader','sass-loader'<% } %><% if (processor === 'PostCSS') { %>'css-loader?importLoaders=1,url=false!postcss-loader'<% } %>
                 ]
             },
 
