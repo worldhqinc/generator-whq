@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const glob = require('glob-all')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurifyCSSPlugin = require('purifycss-webpack')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
@@ -98,6 +99,8 @@ module.exports = {
     // },
 
     plugins: [
+        new ProgressBarPlugin(),
+
         new CleanWebpackPlugin(['build'], {
             root: __dirname,
             verbose: true,
