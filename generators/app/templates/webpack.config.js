@@ -123,7 +123,22 @@ module.exports = {
         new ManifestPlugin(),
 
         // uncomment to generate service worker
-        // new WorkboxPlugin.GenerateSW(),
+        // new WorkboxPlugin.GenerateSW({
+        //     clientsClaim: true,
+        //     skipWaiting: true,
+        //     globPatterns: ['build/*.{js,png,html,css}'],
+        //     dontCacheBustUrlsMatching: /\.\w{8}\./,
+        //     runtimeCaching: [
+        //         {
+        //             urlPattern: new RegExp('/(?:[^wp\\-admin]*)/'),
+        //             handler: 'networkFirst'
+        //         },
+        //         {
+        //             urlPattern: new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'),
+        //             handler: 'staleWhileRevalidate'
+        //         },
+        //     ]
+        // }),
 
         new BrowserSyncPlugin({
             host: 'localhost',

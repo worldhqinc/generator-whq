@@ -1,5 +1,5 @@
 <script>
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && !window.location.hostname.startsWith('dev')) {
         window.addEventListener('load', function () {
             navigator.serviceWorker.register('<?php echo get_template_directory_uri() . '/build/service-worker.js'; ?>', {scope: '/'})
                 .then(registration => {
