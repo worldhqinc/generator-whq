@@ -212,7 +212,7 @@ new WorkboxPlugin.GenerateSW(),
 Then, comment in the code that will register the service worker. In a basic PHP project this will be an inline script tag in your `head`:
 
 ```php
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && !window.location.hostname.startsWith('dev')) {
     window.addEventListener('load', function () {
         navigator.serviceWorker.register('/build/service-worker.js', {scope: '/'})
             .then(registration => {

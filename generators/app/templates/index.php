@@ -19,7 +19,7 @@ get_header();
     ?>
     <link rel="stylesheet" href="build/<?php echo $assets['main.css']; ?>">
     <!--<script>
-        if ('serviceWorker' in navigator) {
+        if ('serviceWorker' in navigator && !window.location.hostname.startsWith('dev')) {
             window.addEventListener('load', function () {
                 navigator.serviceWorker.register('/build/service-worker.js', {scope: '/'})
                     .then(registration => {
