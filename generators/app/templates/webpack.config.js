@@ -58,7 +58,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: inProduction ? 'img/[name].[hash].[ext]' : 'img/[name].[ext]'
+                            name: inProduction ? 'img/[name].[chunkhash].[ext]' : 'img/[name].[ext]'
                         }
                     },
 
@@ -108,7 +108,7 @@ module.exports = {
         }),
 
         new MiniCssExtractPlugin({
-            filename: inProduction ? '[name].[hash].css' : '[name].css'
+            filename: inProduction ? '[name].[chunkhash].css' : '[name].css'
         }),
 
         new PurifyCSSPlugin({
