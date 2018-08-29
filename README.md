@@ -95,20 +95,6 @@ Then, whenever you change into the project directory, avn will automatically cha
 
 There a few special tools and plugins that are part of our webpack setup:
 
-#### Vendor Bundling
-
-Extracting common packages into bundles is a feature that is now built into webpack. This is useful for bundling together vendor assets.
-
-```js
-entry: {
-    'vendor': [
-        'vue',
-        'vue-resource',
-        'vue-router'
-    ]
-}
-```
-
 #### Modernizr
 
 [Modernizr](https://modernizr.com) provides powerful browser feature detection that can be tremendously useful when developing more complex interactions.
