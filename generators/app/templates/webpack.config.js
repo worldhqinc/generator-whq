@@ -18,13 +18,24 @@ module.exports = {
         main: [
             './js/main.js',
             <% if (processor === 'Sass') { %>'./scss/main.scss'<% } %><% if (processor === 'PostCSS') { %>'./css/main.css'<% } %>
-        ],
-        // vendor: [] // uncomment and add vendor packages to create vendor bundle
+        ]
     },
 
     output: {
         path: path.resolve(__dirname, './build'),
         filename: inProduction ? '[name].[chunkhash].js' : '[name].js'
+    },
+    
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    chunks: 'all'
+                }
+            }
+        }
     },
 
     devtool: 'source-map',
